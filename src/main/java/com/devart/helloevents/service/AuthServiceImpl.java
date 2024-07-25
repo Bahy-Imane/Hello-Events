@@ -1,5 +1,4 @@
 package com.devart.helloevents.service;
-
 import com.devart.helloevents.JWT.JwtTokenProvider;
 import com.devart.helloevents.dto.LoginDto;
 import com.devart.helloevents.dto.SignUpDto;
@@ -49,11 +48,11 @@ public class AuthServiceImpl implements AuthService {
         user.setEmail(signUpDto.getEmail());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
 
-        // Set the role from SignUpDto
-        user.setRole(signUpDto.getRole());
+        user.setRole(RoleEnum.ROLE_USER);
 
         userRepository.save(user);
 
         return "User registered successfully!";
     }
+
 }

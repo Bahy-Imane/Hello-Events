@@ -31,5 +31,7 @@ public class User {
         @Enumerated(EnumType.STRING)
         @Column(name = "role")
         private RoleEnum role;
+
+
     }
 

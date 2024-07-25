@@ -15,7 +15,6 @@ public class SignUpDto {
     private String userName;
     private String email;
     private String password;
-    private RoleEnum role;  // Added role field
 
 }
 
