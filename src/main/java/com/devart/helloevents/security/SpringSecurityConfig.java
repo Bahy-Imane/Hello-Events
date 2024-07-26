@@ -1,6 +1,5 @@
 package com.devart.helloevents.security;
 
-import com.devart.helloevents.JWT.JwtAuthenticationEntryPoint;
 import com.devart.helloevents.JWT.JwtAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -37,11 +36,8 @@ public class SpringSecurityConfig {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/api/user").permitAll();
-                    authorize.requestMatchers("/api/admin").permitAll();
-                    authorize.requestMatchers("/api/auth/signup").permitAll();  // Permet l'inscription pour tout le monde
-                    authorize.requestMatchers("/api/auth/login").permitAll();   // Permet la connexion pour tout le monde
-                    authorize.anyRequest().authenticated();                      // Exige une authentification pour toutes les autres requêtes
+                    authorize.requestMatchers("/api/auth/**").permitAll();
+                    authorize.anyRequest().authenticated();
                 })
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(authenticationEntryPoint))

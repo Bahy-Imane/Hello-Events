@@ -15,7 +15,6 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User {
-
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
@@ -31,7 +30,5 @@ public class User {
         @Enumerated(EnumType.STRING)
         @Column(name = "role")
         private RoleEnum role;
-
-
     }
 
