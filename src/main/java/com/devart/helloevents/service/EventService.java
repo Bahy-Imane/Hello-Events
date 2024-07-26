@@ -3,7 +3,6 @@ package com.devart.helloevents.service;
 import com.devart.helloevents.dto.EventDTO;
 import com.devart.helloevents.model.Event;
 import com.devart.helloevents.repository.EventRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.stream.Collectors;
 @Service
 public class EventService {
 
-    @Autowired
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
+
+    public EventService(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
+    }
 
     public List<EventDTO> getAllEvents() {
         return eventRepository.findAll().stream().map(this::convertToDto).collect(Collectors.toList());

@@ -29,9 +29,9 @@ public class User {
 
         @Enumerated(EnumType.STRING)
         @Column(name = "role")
-        private RoleEnum role;
+        private Role role;
 
         @OneToMany
-        private Set<TicketReservation> ticketReservations;
+        private Set<Booking> bookings;
     }
 

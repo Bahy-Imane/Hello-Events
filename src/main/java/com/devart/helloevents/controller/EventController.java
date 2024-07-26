@@ -2,7 +2,6 @@ package com.devart.helloevents.controller;
 
 import com.devart.helloevents.dto.EventDTO;
 import com.devart.helloevents.service.EventService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,15 +11,18 @@ import java.util.List;
 @RequestMapping("/api/admin/events")
 public class EventController {
 
-    @Autowired
-    private EventService eventService;
+    private final EventService eventService;
+
+    public EventController(EventService eventService) {
+        this.eventService = eventService;
+    }
 
     @GetMapping("/all")
     public List<EventDTO> getAllEvents() {
         return eventService.getAllEvents();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/add")
     public EventDTO createEvent(@RequestBody EventDTO eventDTO) {
         return eventService.createEvent(eventDTO);
