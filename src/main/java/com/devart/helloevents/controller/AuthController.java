@@ -1,5 +1,6 @@
 package com.devart.helloevents.controller;
 
+import com.devart.helloevents.dto.JwtAuthResponse;
 import com.devart.helloevents.dto.LoginDto;
 import com.devart.helloevents.dto.SignUpDto;
 import com.devart.helloevents.service.AuthService;
@@ -17,9 +18,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto) {
         String token = authService.login(loginDto);
-        return ResponseEntity.ok(token);
+        JwtAuthResponse response = new JwtAuthResponse();
+        response.setAccessToken(token);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/signup")
