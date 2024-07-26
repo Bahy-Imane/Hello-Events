@@ -19,12 +19,15 @@ public class TicketReservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String userName;
     private LocalDateTime reservationDate;
     private int numberOfTickets;
 
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }
