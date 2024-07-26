@@ -1,6 +1,5 @@
 package com.devart.helloevents.dto;
 
-import com.devart.helloevents.model.RoleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

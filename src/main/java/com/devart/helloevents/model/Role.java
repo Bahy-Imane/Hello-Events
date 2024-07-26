@@ -1,6 +1,6 @@
 package com.devart.helloevents.model;
 
-public enum RoleEnum {
+public enum Role {
     ROLE_USER,
     ROLE_ADMIN
 }

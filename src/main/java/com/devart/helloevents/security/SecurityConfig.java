@@ -1,6 +1,6 @@
 package com.devart.helloevents.security;
 
-import com.devart.helloevents.JWT.JwtAuthenticationFilter;
+import com.devart.helloevents.jwt.JwtAuthenticationFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableMethodSecurity
 @AllArgsConstructor
-public class SpringSecurityConfig {
+public class SecurityConfig {
 
     private AuthenticationEntryPoint authenticationEntryPoint;
     private  JwtAuthenticationFilter authenticationFilter;

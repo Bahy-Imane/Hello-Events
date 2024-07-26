@@ -1,28 +1,33 @@
 package com.devart.helloevents.model;
 
-import com.devart.helloevents.model.Event;
-import com.devart.helloevents.model.User;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
-@Data
+import java.time.LocalDateTime;
+
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "bookings")
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private LocalDateTime reservationDate;
+    private int numberOfTickets;
 
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

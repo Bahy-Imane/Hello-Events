@@ -1,6 +1,5 @@
 package com.devart.helloevents.security;
 
-import com.devart.helloevents.model.RoleEnum;
 import com.devart.helloevents.model.User;
 import com.devart.helloevents.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -21,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
-        User user = userRepository.findUsersByuserNameOrEmail(usernameOrEmail, usernameOrEmail)
+        User user = userRepository.findByUserNameOrEmail(usernameOrEmail, usernameOrEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username or email: " + usernameOrEmail));
 
         GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());

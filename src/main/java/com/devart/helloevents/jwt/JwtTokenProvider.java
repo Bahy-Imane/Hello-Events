@@ -1,4 +1,4 @@
-package com.devart.helloevents.JWT;
+package com.devart.helloevents.jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -19,32 +19,24 @@ public class JwtTokenProvider {
     @Value("${app-jwt-expiration-milliseconds}")
     private long jwtExpirationDate;
 
-    // generate JWT token
     public String generateToken(Authentication authentication){
-
         String username = authentication.getName();
-
         Date currentDate = new Date();
-
         Date expireDate = new Date(currentDate.getTime() + jwtExpirationDate);
 
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
                 .expiration(expireDate)
                 .signWith(key())
                 .compact();
-
-        return token;
     }
 
     private Key key(){
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
 
-    // get username from JWT token
     public String getUsername(String token){
-
         return Jwts.parser()
                 .verifyWith((SecretKey) key())
                 .build()
@@ -53,13 +45,11 @@ public class JwtTokenProvider {
                 .getSubject();
     }
 
-    // validate JWT token
     public boolean validateToken(String token){
         Jwts.parser()
                 .verifyWith((SecretKey) key())
                 .build()
                 .parse(token);
         return true;
-
     }
 }
