@@ -1,16 +1,17 @@
 package com.devart.helloevents.service;
 
 import com.devart.helloevents.dto.BookingDTO;
-import com.devart.helloevents.model.Event;
 import com.devart.helloevents.model.Booking;
+import com.devart.helloevents.model.Event;
 import com.devart.helloevents.model.User;
-import com.devart.helloevents.repository.EventRepository;
 import com.devart.helloevents.repository.BookingRepository;
+import com.devart.helloevents.repository.EventRepository;
 import com.devart.helloevents.repository.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class BookingService {
@@ -26,8 +27,10 @@ public class BookingService {
     }
 
     public String reserveTickets(BookingDTO bookingDTO, Authentication authentication) {
-        User user =userRepository.findByUserName(authentication.getName()).orElseThrow(()->new RuntimeException("User not found"));
-        Event event = eventRepository.findById(bookingDTO.getEventId()).orElseThrow(() -> new RuntimeException("Event not found"));
+        User user = userRepository.findByUserName(authentication.getName())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Event event = eventRepository.findById(bookingDTO.getEventId())
+                .orElseThrow(() -> new RuntimeException("Event not found"));
 
         if (event.getCapacity() < bookingDTO.getNumberOfTickets()) {
             return "Not enough tickets available";
@@ -47,4 +50,9 @@ public class BookingService {
         return "Reservation successful";
     }
 
+    public List<Booking> getAllBookingsByUser(Authentication authentication) {
+        User user = userRepository.findByUserName(authentication.getName())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return bookingRepository.findByUser(user);
+    }
 }
