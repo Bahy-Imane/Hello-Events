@@ -120,6 +120,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>hello-event-backend</finalName>
 	</build>
 
 </project>
