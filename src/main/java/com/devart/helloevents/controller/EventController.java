@@ -44,8 +44,7 @@ public class EventController {
     @GetMapping("/search")
     public List<EventDTO> searchEvents(
             @RequestParam(required = false) LocalDateTime date,
-            @RequestParam(required = false) String location,
-            @RequestParam(required = false) String category) {
-        return eventService.searchEvents(date, location, category);
+            @RequestParam(required = false) String location) {
+        return eventService.searchEvents(date, location);
     }
 }

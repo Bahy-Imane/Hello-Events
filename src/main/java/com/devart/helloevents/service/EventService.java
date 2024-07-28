@@ -23,18 +23,15 @@ public class EventService {
     }
 
     public EventDTO createEvent(EventDTO eventDTO) {
-        Event event = convertToEntity(eventDTO);
+        Event event = new Event();
+        updateEventFields(event, eventDTO);
         return convertToDto(eventRepository.save(event));
     }
 
     public EventDTO updateEvent(Long eventId, EventDTO eventDTO) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new RuntimeException("Event not found"));
-        event.setName(eventDTO.getName());
-        event.setDescription(eventDTO.getDescription());
-        event.setLocation(eventDTO.getLocation());
-        event.setDate(eventDTO.getDate());
-        event.setCapacity(eventDTO.getCapacity());
+        updateEventFields(event, eventDTO);
         return convertToDto(eventRepository.save(event));
     }
 
@@ -42,8 +39,8 @@ public class EventService {
         eventRepository.deleteById(eventId);
     }
 
-    public List<EventDTO> searchEvents(LocalDateTime date, String location, String category) {
-        return eventRepository.findByDateOrLocationOrCategory(date, location, category).stream()
+    public List<EventDTO> searchEvents(LocalDateTime date, String location) {
+        return eventRepository.findByDateOrLocation(date, location).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -51,22 +48,23 @@ public class EventService {
     private EventDTO convertToDto(Event event) {
         EventDTO eventDTO = new EventDTO();
         eventDTO.setId(event.getId());
-        eventDTO.setName(event.getName());
-        eventDTO.setDescription(event.getDescription());
-        eventDTO.setLocation(event.getLocation());
-        eventDTO.setDate(event.getDate());
-        eventDTO.setCapacity(event.getCapacity());
+        updateEventDTOFields(eventDTO, event);
         return eventDTO;
     }
 
-    private Event convertToEntity(EventDTO eventDTO) {
-        Event event = new Event();
-        event.setId(eventDTO.getId());
+    private void updateEventFields(Event event, EventDTO eventDTO) {
         event.setName(eventDTO.getName());
         event.setDescription(eventDTO.getDescription());
         event.setLocation(eventDTO.getLocation());
         event.setDate(eventDTO.getDate());
         event.setCapacity(eventDTO.getCapacity());
-        return event;
+    }
+
+    private void updateEventDTOFields(EventDTO eventDTO, Event event) {
+        eventDTO.setName(event.getName());
+        eventDTO.setDescription(event.getDescription());
+        eventDTO.setLocation(event.getLocation());
+        eventDTO.setDate(event.getDate());
+        eventDTO.setCapacity(event.getCapacity());
     }
 }

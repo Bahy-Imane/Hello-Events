@@ -96,15 +96,14 @@ class EventServiceTest {
     void searchEvents() {
         LocalDateTime searchDate = LocalDateTime.now();
         String searchLocation = "Search Location";
-        String searchCategory = "Search Category";
 
         Event event1 = new Event(1L, "Event 1", "Description 1", searchLocation, searchDate, 100, null);
         Event event2 = new Event(2L, "Event 2", "Description 2", "Other Location", searchDate.plusDays(1), 200, null);
 
-        when(eventRepository.findByDateOrLocationOrCategory(searchDate, searchLocation, searchCategory))
+        when(eventRepository.findByDateOrLocation(searchDate, searchLocation))
                 .thenReturn(Arrays.asList(event1, event2));
 
-        List<EventDTO> result = eventService.searchEvents(searchDate, searchLocation, searchCategory);
+        List<EventDTO> result = eventService.searchEvents(searchDate, searchLocation);
 
         assertEquals(2, result.size());
         assertEquals("Event 1", result.get(0).getName());
