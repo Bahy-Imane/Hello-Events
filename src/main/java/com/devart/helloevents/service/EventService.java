@@ -5,6 +5,7 @@ import com.devart.helloevents.model.Event;
 import com.devart.helloevents.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +40,12 @@ public class EventService {
 
     public void deleteEvent(Long eventId) {
         eventRepository.deleteById(eventId);
+    }
+
+    public List<EventDTO> searchEvents(LocalDateTime date, String location, String category) {
+        return eventRepository.findByDateOrLocationOrCategory(date, location, category).stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     private EventDTO convertToDto(Event event) {
