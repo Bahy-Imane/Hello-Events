@@ -32,5 +32,8 @@ public class User {
 
         @OneToMany
         private Set<Booking> bookings;
+
+        @OneToMany
+        private Set<Contact> contacts;
     }
 
