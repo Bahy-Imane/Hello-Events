@@ -1,52 +1,53 @@
 # Hello-Events
 
-Hello-Events is a web application for event ticket booking developed using Spring Boot 3.3.2.
+Hello-Events est une application web de réservation de billets pour des événements, développée avec Spring Boot 3.3.2.
 
-## Project Overview
+## Aperçu du Projet
 
-This application allows users to browse events, book tickets, and manage their accounts. It also provides an admin interface for managing events and user accounts.
+Cette application permet aux utilisateurs de parcourir des événements, de réserver des billets et de gérer leurs comptes. Elle offre également une interface d'administration pour la gestion des événements et des comptes utilisateurs.
 
-### Features
+### Fonctionnalités
 
-#### For Clients:
-- View events on the homepage
-- User registration and authentication
-- User profile management
-- Event search and filtering
-- Ticket booking
-- View team and company values
-- Contact form submission
+#### Pour les Clients :
+- Affichage des événements sur la page d'accueil
+- Inscription et authentification des utilisateurs
+- Gestion du profil utilisateur
+- Recherche et filtrage des événements
+- Réservation de billets
+- Consultation des informations sur l'équipe et les valeurs de l'entreprise
+- Soumission de formulaire de contact
 
-#### For Administrators:
-- Dashboard with client activities and event data
-- User account management
-- Event management (CRUD operations)
-- Handle contact form submissions
+#### Pour les Administrateurs :
+- Tableau de bord avec les activités des clients et les données des événements
+- Gestion des comptes utilisateurs
+- Gestion des événements (opérations CRUD)
+- Traitement des soumissions du formulaire de contact
 
-## Technologies Used
+## Technologies Utilisées
 
 - Spring Boot 3.3.2
 - Spring MVC
-- Spring Security 6.3.1 with JWT
+- Spring Security 6.3.1 avec JWT
 - Spring Data JPA
-- JUnit for testing
-- DTO pattern
-- Lombok for reducing boilerplate code
-- MySQL 8.3.0 as the database
-- Docker for containerization
+- JUnit pour les tests
+- Pattern DTO
+- Lombok pour réduire le code répétitif
+- MySQL 8.3.0 comme base de données
+- Docker pour la conteneurisation
 
-## Getting Started
+## Démarrage
 
-### Prerequisites
+### Prérequis
 
-- JDK 21 or later
-- Maven 3.6.3 or later
+- JDK 17 ou ultérieur
+- Maven 3.6.3 ou ultérieur
 - MySQL 8.3.0
-- Docker (for containerization)
+- Docker (pour la conteneurisation)
 
-### Setup and Installation
+### Configuration et Installation
 
-1. Clone the repository: https://github.com/Bahy-Imane/Hello-Events.git
-2. Navigate to the project directory: cd Hello-Events
-3. Configure the database connection in `src/main/resources/application.properties`.
-4. Build the project: mvn clean install
+1. Clonez le dépôt : https://github.com/Bahy-Imane/Hello-Events.git
+2. Naviguez vers le répertoire du projet : cd Hello-Events
+3. Configurez la connexion à la base de données dans `src/main/resources/application.properties`.
+4. Construisez le projet : mvn clean install
+5. Lancez l'application : mvn spring-boot:run
