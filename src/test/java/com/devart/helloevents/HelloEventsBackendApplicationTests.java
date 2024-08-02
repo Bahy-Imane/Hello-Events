@@ -6,9 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class HelloEventsBackendApplicationTests {
 
-//	@Test
-//	void contextLoads() {
-//	}
-
-
+	@Test
+	void contextLoads() {
+	}
 }

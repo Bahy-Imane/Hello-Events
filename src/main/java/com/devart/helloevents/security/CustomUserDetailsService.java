@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Collections;
 
 @Service
@@ -25,11 +26,25 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
 
-        return new org.springframework.security.core.userdetails.User(
-                usernameOrEmail,
+        return new CustomUserDetails(
+                user.getId(),
+                user.getUserName(),
+                user.getEmail(),
                 user.getPassword(),
-                Collections.singleton(authority)
+                Collections.singletonList(authority)  // Changed to singletonList
         );
     }
 
+    public static class CustomUserDetails extends org.springframework.security.core.userdetails.User {
+        private final Long id;
+
+        public CustomUserDetails(Long id, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+            super(username, password, authorities);
+            this.id = id;
+        }
+
+        public Long getId() {
+            return id;
+        }
+    }
 }

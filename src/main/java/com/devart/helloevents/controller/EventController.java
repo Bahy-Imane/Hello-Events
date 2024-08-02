@@ -2,12 +2,13 @@ package com.devart.helloevents.controller;
 
 import com.devart.helloevents.dto.EventDTO;
 import com.devart.helloevents.service.EventService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/events")
 public class EventController {
@@ -18,33 +19,45 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping("/all")
-    public List<EventDTO> getAllEvents() {
-        return eventService.getAllEvents();
+    @GetMapping
+    public ResponseEntity<List<EventDTO>> getAllEvents() {
+        return ResponseEntity.ok(eventService.getAllEvents());
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/add")
-    public EventDTO createEvent(@RequestBody EventDTO eventDTO) {
-        return eventService.createEvent(eventDTO);
+    @GetMapping("/{id}")
+    public ResponseEntity<EventDTO> getEventById(@PathVariable Long id) {
+        return ResponseEntity.ok(eventService.getEventById(id));
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/update/{id}")
-    public EventDTO updateEvent(@PathVariable Long id, @RequestBody EventDTO eventDTO) {
-        return eventService.updateEvent(id, eventDTO);
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping
+    public ResponseEntity<EventDTO> createEvent(@RequestBody EventDTO eventDTO) {
+        return ResponseEntity.ok(eventService.createEvent(eventDTO));
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/delete/{id}")
-    public void deleteEvent(@PathVariable Long id) {
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<EventDTO> updateEvent(@PathVariable Long id, @RequestBody EventDTO eventDTO) {
+        return ResponseEntity.ok(eventService.updateEvent(id, eventDTO));
+    }
+
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
         eventService.deleteEvent(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/search")
-    public List<EventDTO> searchEvents(
-            @RequestParam(required = false) LocalDateTime date,
+    public ResponseEntity<List<EventDTO>> searchEvents(
+            @RequestParam(required = false) String title,
             @RequestParam(required = false) String location) {
-        return eventService.searchEvents(date, location);
+        if (title != null && !title.isEmpty()) {
+            return ResponseEntity.ok(eventService.searchEventsByTitle(title));
+        } else if (location != null && !location.isEmpty()) {
+            return ResponseEntity.ok(eventService.searchEventsByLocation(location));
+        } else {
+            return ResponseEntity.ok(eventService.getAllEvents());
+        }
     }
 }

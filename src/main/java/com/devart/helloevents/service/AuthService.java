@@ -1,5 +1,7 @@
 package com.devart.helloevents.service;
+
 import com.devart.helloevents.jwt.JwtTokenProvider;
+import com.devart.helloevents.dto.JwtAuthResponse;
 import com.devart.helloevents.dto.LoginDto;
 import com.devart.helloevents.dto.SignUpDto;
 import com.devart.helloevents.model.Role;
@@ -22,7 +24,7 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
-    public String login(LoginDto loginDto) {
+    public JwtAuthResponse login(LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUserNameOrEmail(),
                 loginDto.getPassword()
@@ -30,7 +32,19 @@ public class AuthService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return jwtTokenProvider.generateToken(authentication);
+        String token = jwtTokenProvider.generateToken(authentication);
+
+        User user = userRepository.findByUserNameOrEmail(loginDto.getUserNameOrEmail(), loginDto.getUserNameOrEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        JwtAuthResponse response = new JwtAuthResponse();
+        response.setAccessToken(token);
+        response.setTokenType("Bearer");
+        response.setUserName(user.getUserName());
+        response.setUserRole(user.getRole().name());
+        response.setUserId(user.getId());
+
+        return response;
     }
 
     public String register(SignUpDto signUpDto) {
@@ -52,5 +66,4 @@ public class AuthService {
 
         return "User registered successfully!";
     }
-
 }
